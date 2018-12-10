@@ -35,7 +35,7 @@ jnc 0x25                             ; "s" 00
 ; execve - execute program
 ; http://man7.org/linux/man-pages/man2/execve.2.html
 ; int execve(const char *filename, char *const argv[], char *const envp[]);
-; execve("/bin/sh", "-c", char *const envp[]);
+; execve("/bin/sh", ["-c", "/bin/ls"], char *const envp[]);
 
 push edi                             ;
 push ebx                             ;
