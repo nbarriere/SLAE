@@ -24,7 +24,7 @@ cipher = blowfish.Cipher(key.encode())
 # Cast bytes to bytearray
 shellcode_array = bytearray(shellcode)
 
-# Complete the shellcode with NOP (\x90) instruction at the end to be a 8 bytes factor
+# Complete the shellcode with NOP (\x90) instruction at the end to be a multiple of 8 bytes
 i = 8 - (len(shellcode_array) % 8)
 while i > 0 :
     i -= 1
@@ -64,5 +64,4 @@ print("Encrypted shellcode:")
 print("-" * 90)
 print(crypted)
 print("-" * 90)
-
 print("Shellcode Length with padding:", len(bytearray(shellcode_crypted)))
