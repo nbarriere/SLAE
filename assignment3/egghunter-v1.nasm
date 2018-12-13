@@ -1,11 +1,11 @@
-; Filename:      egghunter.nasm
+; Filename:      egghunter-v1.nasm
 ; Author:        Nicolas Barrière
 ; Student ID:    SLAE - 1398
 ; Created Date:  05.12.2018
 ; Note:          x86 code but assembled and linked on x64
-; Assembler:     nasm -f elf32 egghunter.nasm -o egghunter.o
-; Linker:        ld -m elf_i386 egghunter.o -o egghunter
-; Assembly dump: objdump -d ./egghunter|grep '[0-9a-f]:'|grep -v 'file'|cut -f2 -d:|cut -f1-6 -d' '|tr -s ' '|tr '\t' ' '|sed 's/ $//g'|sed 's/ /\\x/g'|paste -d '' -s |sed 's/^/"/'|sed 's/$/"/g'
+; Assembler:     nasm -f elf32 egghunter-v1.nasm -o egghunter-v1.o
+; Linker:        ld -m elf_i386 egghunter-v1.o -o egghunter-v1
+; Assembly dump: objdump -d ./egghunter-v1|grep '[0-9a-f]:'|grep -v 'file'|cut -f2 -d:|cut -f1-6 -d' '|tr -s ' '|tr '\t' ' '|sed 's/ $//g'|sed 's/ /\\x/g'|paste -d '' -s |sed 's/^/"/'|sed 's/$/"/g'
 
 global _start
 
@@ -13,7 +13,7 @@ section .text
 
 _start:
 
-	; Egg hunter
+	; Egg hunter v1
 
 	mov ebx,0x50905090  ; X,NOP,X,NOP
 	xor ecx, ecx        ; Clear ecx register
@@ -21,7 +21,7 @@ _start:
 
 next_page:
 
-	or dx,0xfff         ; edx = 0x00000fff  Memory alignment
+	or dx,0xfff         ; Set 0x?????000 Memory alignment, next inc instruction +0x1000
 
 next_address:
 

